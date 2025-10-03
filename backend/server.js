@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const notesRoutes = require('./routes/notes');
 
+const PORT = process.env.PORT || 3001;
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -17,4 +19,4 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/auth', authRoutes);
 app.use('/notes', notesRoutes);
 
-app.listen(3001, () => console.log('Backend running on port 3001'));
+app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
