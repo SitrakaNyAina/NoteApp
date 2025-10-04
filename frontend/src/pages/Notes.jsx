@@ -8,7 +8,7 @@ export default function Notes() {
 
   const fetchNotes = async () => {
     const token = localStorage.getItem('token');
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/auth/notes`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/notes`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     setNotes(res.data);
