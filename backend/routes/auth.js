@@ -4,14 +4,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
-// router.post('/register', async (req, res) => {
-//   const { name, password } = req.body;
-//   res.send('API en développement');
-//   const hashed = await bcrypt.hash(password, 10);
-//   await User.create({ name, password: hashed });
-//   res.status(201).json({ message: 'User registered' });
-// });
-
 router.post('/register', async (req, res) => {
   const { name, password } = req.body;
   try {
