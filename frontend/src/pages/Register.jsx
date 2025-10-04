@@ -21,6 +21,7 @@ export default function Register() {
       <input type="text"placeholder="Nom" onChange={e => setName(e.target.value)} />
       <input type="password" placeholder="Mot de passe" onChange={e => setPassword(e.target.value)} />
       <input type="submit" value="S'inscrire" />
+      <button type="submit" >Inscription</button>
     </form>
   );
-}
+}type="submit
