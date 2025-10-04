@@ -20,8 +20,8 @@ export default function Register() {
     <form onSubmit={handleSubmit} className="container" action="/register" method="POST">
       <input type="text"placeholder="Nom" onChange={e => setName(e.target.value)} />
       <input type="password" placeholder="Mot de passe" onChange={e => setPassword(e.target.value)} />
-      <input type="submit" value="S'inscrire" />
+       {/*<input type="submit" value="S'inscrire" />*/}
       <button type="submit" >Inscription</button>
     </form>
   );
-}type="submit
+}
