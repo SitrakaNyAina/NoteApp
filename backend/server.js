@@ -19,8 +19,10 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/auth', authRoutes);
 app.use('/notes', notesRoutes);
 
-app.get('/', (req, res) => {
-  res.send('API NotesApp est en ligne 🚀');
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/', (req, res) => {
+    res.send('API en développement');
+  });
+}
 
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
