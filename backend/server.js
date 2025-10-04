@@ -19,4 +19,8 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/auth', authRoutes);
 app.use('/notes', notesRoutes);
 
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
