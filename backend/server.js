@@ -1,28 +1,24 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const notesRoutes = require('./routes/notes');
-
-const PORT = process.env.PORT || 3001;
+const verifyToken = require('./middleware/auth');
 
 const app = express();
+const PORT = process.env.PORT || 3001;
+
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+app.get('/', (req, res) => {
+  res.send('Notes API is running 🚀');
+});
 
 app.use('/auth', authRoutes);
-app.use('/notes', notesRoutes);
+app.use('/notes', verifyToken, notesRoutes);
 
-if (process.env.NODE_ENV !== 'production') {
-  app.get('/', (req, res) => {
-    res.send('API en développement');
-  });
-}
-
-app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Backend running on port ${PORT}`);
+});

@@ -1,18 +1,38 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const Note = require('../models/Note');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 const router = express.Router();
 
+// get all notes
+router.get('/', async (req, res) => {
+  const notes = await prisma.note.findMany({
+    where: { userId: req.user.id },
+    orderBy: { createdAt: 'desc' }
+  });
+  res.json(notes);
+});
+
+// create a new note
 router.post('/', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  const { content, takenAt } = req.body;
   try {
-    const { name } = jwt.verify(token, process.env.JWT_SECRET);
-    const { date, content } = req.body;
-    await Note.create({ name, date, content });
-    res.status(201).json({ message: 'Note added' });
-  } catch {
-    res.status(403).json({ message: 'Unauthorized' });
+    const note = await prisma.note.create({
+      data: {
+        content,
+        takenAt: new Date(takenAt),
+        userId: req.user.id
+      }
+    });
+    res.status(201).json(note);
+  } catch (err) {
+    res.status(500).json({ message: 'Note creation failed', error: err.message });
   }
 });
 
-module.exports = router;
+router.get('/', async (req, res) => {
+  const notes = await prisma.note.findMany({
+    where: { userId: req.user.id },
+    orderBy: { takenAt: 'desc' }
+  });
+  res.json(notes);
+});

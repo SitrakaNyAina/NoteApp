@@ -13,6 +13,17 @@ export default function Notes() {
     });
     setNotes(res.data);
   };
+  function formatDate(dateString) {
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+    return new Date(dateString).toLocaleString('en-US', options);
+  }
 
   useEffect(() => {
     fetchNotes();
@@ -24,11 +35,11 @@ export default function Notes() {
       <NoteForm onNoteAdded={fetchNotes} />
       <h3>Notes précédentes</h3>
       <ul>
-        {notes.map((note, index) => (
-          <li key={index}>
-            <h3>{note.name}</h3>
-            <strong>{note.date}</strong> : {note.content}
-          </li>
+        {notes.map(note => (
+          <div key={note.id} className="note">
+          <p>{note.content}</p>
+          <small>Taken on: {formatDate(note.takenAt)}</small>
+          </div>
         ))}
       </ul>
     </div>

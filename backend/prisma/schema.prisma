@@ -1,0 +1,15 @@
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  password String
+  notes    Note[]
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  content   String
+  takenAt   DateTime
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
